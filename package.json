@@ -1,0 +1,17 @@
+{
+  "name": "crispybits.io",
+  "version": "1.0.0",
+  "description": "Tasty nuggets of technical goodness, half-baked to perfection",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michael Romer",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^4.0.0"
+  },
+  "dependencies": {
+    "foundation-sites": "^6.5.1"
+  }
+}
