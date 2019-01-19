@@ -4,6 +4,7 @@ var autoprefixer = require( 'gulp-autoprefixer' );
 var browserSync = require( 'browser-sync' ).create();
 var cleancss = require( 'gulp-clean-css' );
 var concat = require( 'gulp-concat' );
+var del = require( 'del' );
 var log = require( 'fancy-log' );
 var run = require( 'gulp-run' );
 var sass = require( 'gulp-sass' );
@@ -26,8 +27,13 @@ paths.outputCssDir = paths.outputSiteDir + '/css';
 // JavaScript paths.
 paths.inputScripts = [
     paths.foundationDir + '/dist/js/foundation.min.js'
-]
+];
 paths.outputScriptsDir = paths.outputSiteDir + '/scripts';
+
+// Clean list.
+paths.cleanGlobs = [
+    paths.outputSiteDir + '/**'
+];
 
 
 // Sass compilation.
@@ -54,4 +60,9 @@ gulp.task( 'copy:scripts', function() {
     return gulp.src( paths.inputScripts )
         .pipe( gulp.dest( paths.outputScriptsDir ) )
         .on( 'error', log.error );
+} );
+
+// Clean output site directory.
+gulp.task( 'clean:site', function( done ) {
+    del( paths.cleanGlobs ).then( paths => { done(); } );
 } );
