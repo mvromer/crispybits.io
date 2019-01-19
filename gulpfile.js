@@ -10,13 +10,27 @@ var sass = require( 'gulp-sass' );
 var uglify = require( 'gulp-uglify' );
 
 var paths = {};
-paths.mainSass = '_assets/scss/main.scss';
+
+// General path information.
+paths.inputAssetsDir = '_assets';
+paths.outputSiteDir = '_site';
+paths.foundationDir = 'node_modules/foundation-sites'
+
+// Sass/CSS paths.
+paths.mainSass = paths.inputAssetsDir + '/scss/main.scss';
 paths.sassLoadDirs = [
-    'node_modules/foundation-sites/scss'
+    paths.foundationDir + '/scss'
 ];
-paths.outputCssDir = '_site/css';
+paths.outputCssDir = paths.outputSiteDir + '/css';
+
+// JavaScript paths.
+paths.inputScripts = [
+    paths.foundationDir + '/dist/js/foundation.min.js'
+]
+paths.outputScriptsDir = paths.outputSiteDir + '/scripts';
 
 
+// Sass compilation.
 sass.compiler = require( 'node-sass' );
 
 gulp.task( 'build:styles', function() {
@@ -32,5 +46,12 @@ gulp.task( 'build:styles', function() {
         .pipe( cleancss() )
         .pipe( gulp.dest( paths.outputCssDir ) )
         .pipe( browserSync.stream() )
+        .on( 'error', log.error );
+} );
+
+// Copying script files.
+gulp.task( 'copy:scripts', function() {
+    return gulp.src( paths.inputScripts )
+        .pipe( gulp.dest( paths.outputScriptsDir ) )
         .on( 'error', log.error );
 } );
