@@ -62,6 +62,12 @@ gulp.task( 'copy:scripts', function() {
         .on( 'error', log.error );
 } );
 
+// Run Jekyll.
+gulp.task( 'build:html', function( done ) {
+    var jekyllCmd = 'jekyll build';
+    return run( jekyllCmd ).exec( done );
+} );
+
 // Clean output site directory.
 gulp.task( 'clean:site', function( done ) {
     del( paths.cleanGlobs ).then( paths => { done(); } );
