@@ -18,7 +18,8 @@ paths.outputSiteDir = '_site';
 paths.foundationDir = 'node_modules/foundation-sites'
 
 // Sass/CSS paths.
-paths.mainSass = paths.inputAssetsDir + '/scss/main.scss';
+paths.inputSassDir = paths.inputAssetsDir + '/scss';
+paths.mainSass = paths.inputSassDir + '/main.scss';
 paths.sassLoadDirs = [
     paths.foundationDir + '/scss'
 ];
@@ -36,10 +37,10 @@ paths.cleanGlobs = [
 ];
 
 
-// Sass compilation.
+// Task: Sass compilation.
 sass.compiler = require( 'node-sass' );
 
-gulp.task( 'build:styles', function() {
+function buildStyles() {
     return gulp.src( paths.mainSass )
         .pipe( sass( {
             outputStyle: 'nested',
@@ -53,22 +54,41 @@ gulp.task( 'build:styles', function() {
         .pipe( gulp.dest( paths.outputCssDir ) )
         .pipe( browserSync.stream() )
         .on( 'error', log.error );
-} );
+}
 
-// Copying script files.
-gulp.task( 'copy:scripts', function() {
+// Task: Copying script files.
+function copyScripts() {
     return gulp.src( paths.inputScripts )
         .pipe( gulp.dest( paths.outputScriptsDir ) )
+        .pipe( browserSync.stream() )
         .on( 'error', log.error );
-} );
+}
 
-// Run Jekyll.
-gulp.task( 'build:html', function( done ) {
-    var jekyllCmd = 'jekyll build';
-    return run( jekyllCmd ).exec( done );
-} );
+// Task: Run Jekyll.
+const buildHtml = ( done ) => run( 'jekyll build' ).exec( done );
 
-// Clean output site directory.
-gulp.task( 'clean:site', function( done ) {
+// Task: Clean output site directory.
+function clean( done ) {
     del( paths.cleanGlobs ).then( paths => { done(); } );
-} );
+}
+
+// Task: Serve and reload the site with Browersync.
+function reload( done ) {
+    browserSync.reload();
+    done();
+}
+
+function serve( done ) {
+    browserSync.init( {
+        server: {
+            baseDir: paths.outputSiteDir
+        }
+    } );
+    done();
+}
+
+// Watchers.
+const watchStyles = () => gulp.watch( paths.inputSassDir + '/*.scss', gulp.series( buildStyles, reload ) );
+
+// Default task.
+gulp.task( 'default', gulp.series( clean, gulp.parallel( buildStyles, copyScripts, buildHtml ), serve, watchStyles ) );
