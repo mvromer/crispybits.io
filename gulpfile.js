@@ -15,10 +15,12 @@ var paths = {};
 // General path information.
 paths.inputAssetsDir = '_assets';
 paths.outputSiteDir = '_site';
+paths.outputSiteGlob = paths.outputSiteDir + '/**';
 paths.foundationDir = 'node_modules/foundation-sites'
 
 // Sass/CSS paths.
 paths.inputSassDir = paths.inputAssetsDir + '/scss';
+paths.inputSassGlob = paths.inputSassDir + '/**/*.scss';
 paths.mainSass = paths.inputSassDir + '/main.scss';
 paths.sassLoadDirs = [
     paths.foundationDir + '/scss'
@@ -31,9 +33,20 @@ paths.inputScripts = [
 ];
 paths.outputScriptsDir = paths.outputSiteDir + '/scripts';
 
+// Jekyll input paths.
+paths.inputJekyllFiles = [
+    '_config.yml',
+    'favicon.+(ico|png)',
+    '*.+(html|md)',
+    '_data/**',
+    '_includes/**',
+    '_layouts/**',
+    '_posts/**'
+];
+
 // Clean list.
 paths.cleanGlobs = [
-    paths.outputSiteDir + '/**'
+    paths.outputSiteGlob
 ];
 
 
@@ -65,11 +78,16 @@ function copyScripts() {
 }
 
 // Task: Run Jekyll.
-const buildHtml = ( done ) => run( 'jekyll build' ).exec( done );
+function runJekyll( done ) {
+    return run( 'jekyll build' ).exec( done );
+}
+
+// Task: Build everything.
+const build = gulp.series( buildStyles, copyScripts, runJekyll );
 
 // Task: Clean output site directory.
-function clean( done ) {
-    del( paths.cleanGlobs ).then( paths => { done(); } );
+function clean() {
+    return del( paths.cleanGlobs );
 }
 
 // Task: Serve and reload the site with Browersync.
@@ -82,13 +100,16 @@ function serve( done ) {
     browserSync.init( {
         server: {
             baseDir: paths.outputSiteDir
-        }
+        },
+       reloadDelay: 2000
     } );
+
+    gulp.watch( paths.inputSassGlob, gulp.series( buildStyles, reload ) );
+    gulp.watch( paths.inputJekyllFiles, gulp.series( runJekyll, reload ) );
     done();
 }
 
-// Watchers.
-const watchStyles = () => gulp.watch( paths.inputSassDir + '/*.scss', gulp.series( buildStyles, reload ) );
-
-// Default task.
-gulp.task( 'default', gulp.series( clean, gulp.parallel( buildStyles, copyScripts, buildHtml ), serve, watchStyles ) );
+// High level tasks.
+gulp.task( 'default', serve );
+gulp.task( 'build', gulp.series( build, serve ) );
+gulp.task( 'rebuild', gulp.series( clean, build, serve ) );
