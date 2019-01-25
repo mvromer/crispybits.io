@@ -100,8 +100,7 @@ function serve( done ) {
     browserSync.init( {
         server: {
             baseDir: paths.outputSiteDir
-        },
-       reloadDelay: 2000
+        }
     } );
 
     gulp.watch( paths.inputSassGlob, gulp.series( buildStyles, reload ) );
