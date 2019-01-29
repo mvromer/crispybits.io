@@ -2,3 +2,27 @@
 @import 'foundation';
 
 @include foundation-everything;
+
+.cell.medium-align-right {
+    @include breakpoint( medium ) {
+        @include flex-align( right );
+    }
+}
+
+nav {
+    background: #FFDDDD;
+}
+
+.logo-cell {
+    height: 0;
+}
+
+.logo {
+    position: relative;
+    display: inline-block;
+    top: 20px;
+}
+
+.hero {
+    width: 100%;
+}

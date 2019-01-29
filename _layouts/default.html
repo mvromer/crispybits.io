@@ -9,7 +9,36 @@
   </head>
 
   <body>
-    {{ content }}
+    <div class="grid-x align-center">
+      <div class="cell shrink">
+        |
+      </div>
+    </div>
+
+    <div class="grid-container full">
+      <nav class="grid-x">
+        <ul class="menu cell medium-auto medium-align-right">
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Code</a></li>
+          <li><a href="#">Music</a></li>
+        </ul>
+        <div class="cell medium-shrink logo-cell">
+          <img class="logo" src="https://www.placehold.it/150"/>
+        </div>
+        <ul class="menu cell medium-auto">
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="grid-x">
+        <div class="cell">
+          <img class="hero" src="https://www.placehold.it/150x50/DDFFDD"/>
+        </div>
+      </div>
+
+      {{ content }}
+    </div>
 
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script src="scripts/foundation.min.js"></script>
