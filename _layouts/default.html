@@ -1,41 +1,46 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" dir="ltr">
   <head>
     <meta charset="utf-8"/>
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>CrispyBits &ndash; Tasty nuggets of technical goodness, half-baked to perfection</title>
     <link rel="stylesheet" href="css/main.css"/>
+    <title>CrispyBits &ndash; Tasty nuggets of technical goodness, half-baked to perfection</title>
   </head>
 
   <body>
-    <div class="grid-x align-center">
-      <div class="cell shrink">
-        |
-      </div>
-    </div>
-
     <div class="grid-container full">
-      <nav class="grid-x">
-        <ul class="menu vertical medium-horizontal cell medium-auto medium-align-right">
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Code</a></li>
-          <li><a href="#">Music</a></li>
-        </ul>
-        <div class="cell medium-shrink logo-cell">
-          <img class="logo" src="https://www.placehold.it/150"/>
-        </div>
-        <ul class="menu vertical medium-horizontal cell medium-auto">
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-      </nav>
+      <header>
+        <section class="title-bar" data-responsive-toggle="main-nav" data-hide-for="medium">
+          <button class="menu-icon" type="button" data-toggle="main-nav"></button>
+          <div class="title-bar-title">CrispyBits</div>
+        </section>
 
-      <div class="grid-x">
+        <section class="grid-x" id="main-nav">
+          <nav class="cell medium-auto">
+            <ul class="medium-align-right menu vertical medium-horizontal">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Code</a></li>
+              <li><a href="#">Music</a></li>
+            </ul>
+          </nav>
+          <div class="cell medium-shrink logo-cell">
+            <img class="logo" src="https://www.placehold.it/150"/>
+          </div>
+          <nav class="cell medium-auto">
+            <ul class="menu vertical medium-horizontal">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+          </nav>
+      </section>
+
+      <section class="grid-x">
         <div class="cell">
           <img class="hero" src="https://www.placehold.it/150x50/DDFFDD"/>
         </div>
-      </div>
+      </section>
+    </header>
 
       {{ content }}
     </div>

@@ -3,18 +3,20 @@
 
 @include foundation-everything;
 
-.cell.medium-align-right {
+.menu.medium-align-right {
     @include breakpoint( medium ) {
         @include flex-align( right );
     }
 }
 
-nav {
+#main-nav {
     background: #FFDDDD;
 }
 
 .logo-cell {
     height: 0;
+
+    @include show-for( medium );
 }
 
 .logo {
