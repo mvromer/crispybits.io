@@ -3,6 +3,22 @@
 
 @include foundation-everything;
 
+// FOUC workaround.
+.no-js {
+    @include breakpoint( small only ) {
+        #main-nav {
+            display: none;
+        }
+    }
+
+    @include breakpoint( medium ) {
+        .title-bar {
+            display: none;
+        }
+    }
+}
+
+// Right-align the flex children in a menu control.
 .menu.medium-align-right {
     @include breakpoint( medium ) {
         @include flex-align( right );
